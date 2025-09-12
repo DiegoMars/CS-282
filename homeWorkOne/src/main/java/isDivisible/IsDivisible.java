@@ -7,4 +7,7 @@ package isDivisible;
 //public boolean isDivisible(int a, int b)
 
 public class IsDivisible {
+    public boolean isDivisible(int a, int b) {
+        return a % b == 0;
+    }
 }

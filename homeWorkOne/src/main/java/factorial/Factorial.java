@@ -12,9 +12,19 @@ What number would you like to compute the factorial for? 4
 24
 */
 
+import java.util.Scanner;
+
 public class Factorial {
 
     public static void main(String[] args) {
-
+        Scanner input = new Scanner(System.in);
+        int number;
+        int factorial = 1;
+        System.out.print("What number would you like to compute the factorial for? ");
+        number = input.nextInt();
+        for  (int i = 1; i <= number; i++) {
+            factorial = factorial * i;
+        }
+        System.out.println(factorial);
     }
 }
