@@ -79,7 +79,7 @@ public class CSArrayList<E>
      * @param index - The index of the item desired
      * @param anEntry The value to be added to the list.
      */
-    public void add (int index, E anEntry) {
+    public void add(int index, E anEntry) {
         if (index < 0 || index > size) {
             throw new ArrayIndexOutOfBoundsException(index);
         }
@@ -186,8 +186,91 @@ public class CSArrayList<E>
         }
         return -1;
     }
+
+    /**
+     * Part A: toString()
+     * Returns something like: "[A, B]"
+     */
+    public String toString() {
+        StringBuilder rThis = new StringBuilder("[");
+        for (int i = 0; i < size; i++) {
+            if (theData[i] == null) {
+                break;
+            }
+            if (rThis.toString().equals("[")){
+                rThis.append(theData[i].toString());
+            } else {
+                rThis.append(", ").append(theData[i].toString());
+            }
+        }
+        return rThis.append("]").toString();
+    }
+
+    /**
+     * Part A: clear()
+     * Sets everything to null, size = 0, and doesn't change the capacity
+     */
+    public void clear() {
+        size = 0;
+        for (int i = 0; i < capacity; i++) {
+            theData[i] = null;
+        }
+    }
+
+    /**
+     * Part A: isEmpty()
+     * Checks if size = 0
+     */
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    /**
+     * Part A: remove(Object o)
+     * Use indexOf(Object item) and remove(int index) to accomplish this
+     */
+    public boolean remove(Object o) {
+        int index = indexOf(o);
+        if (index != -1) {
+            remove(index);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Part A: ensureCapacity(int minCapacity)
+     * Use reallocate() to accomplish this
+     */
+    public void ensureCapacity(int minCapacity) {
+       while (capacity < minCapacity) {
+           reallocate();
+       }
+    }
+
+    /**
+     * Part A: trimToSize()
+     */
+    public void trimToSize() {
+        capacity = size;
+        theData = Arrays.copyOf(theData, capacity);
+    }
+
+    /**
+     * Part C: addAll(int index, Collection<\? extends E> c)
+     */
+    public boolean addAll(int index, Collection<? extends E> c) {
+        if (index < 0 || index > size) {
+            throw new ArrayIndexOutOfBoundsException(index);
+        }
+        ensureCapacity(size + c.size());
+        for (E e : c) {
+            for (int i = size; i > index; i--) {
+                theData[i] = theData[i - 1];
+            }
+            theData[index] = e;
+            size++;
+        }
+        return true;
+    }
 }
-
-
-
-
