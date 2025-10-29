@@ -26,11 +26,15 @@ public class CSArrayListTest {
         // System.out.println(((CSArrayList<String>) testCollection).indexOf("B"));
 
         int N = 1_000_000; // or larger
-        int iterations = 500;
+        int iterations = 10;
 
         // For testing CSArrayList
         float csAverageAppend = 0;
         float csAverageGet = 0;
+        double csHighestAppend = 0;
+        double csHighestGet = 0;
+        double csLowestAppend = 100000000;
+        double csLowestGet = 100000000;
         for (int count = 0; count < iterations; count++){
             CSArrayList<Integer> csTest = new CSArrayList<>();
             long tCS0 = System.nanoTime();
@@ -42,18 +46,28 @@ public class CSArrayListTest {
             long tCS2 = System.nanoTime();
             double append = (tCS1-tCS0)/1e6;
             double get = (tCS2-tCS1)/1e6;
-            // System.out.printf("CSArrayList: append = %.1fms, get = %.1fms\n", append, get);
+            System.out.printf("CSArrayList: append = %.1fms, get = %.1fms\n", append, get);
             csAverageAppend += append;
             csAverageGet += append;
+            if (append > csHighestAppend) csHighestAppend = append;
+            if (append > csHighestGet) csHighestGet = get;
+            if (append < csLowestAppend) csLowestAppend = append;
+            if (append < csLowestGet) csLowestGet = get;
         }
         csAverageAppend = csAverageAppend / iterations;
         csAverageGet = csAverageGet / iterations;
-        System.out.printf("CSArrayList Averages: append = %.1fms, get = %.1fms", csAverageGet, csAverageGet);
-        System.out.println("\n");
+        System.out.printf("CSArrayList Highest: append = %.1fms, get = %.1fms\n", csHighestAppend, csHighestGet);
+        System.out.printf("CSArrayList Lowest: append = %.1fms, get = %.1fms\n", csLowestAppend, csLowestGet);
+        System.out.printf("CSArrayList Averages: append = %.1fms, get = %.1fms\n", csAverageGet, csAverageGet);
+        System.out.print("\n");
 
         // // For testing java.util.ArrayList
         float averageAppend = 0;
         float averageGet = 0;
+        double highestAppend = 0;
+        double highestGet = 0;
+        double lowestAppend = 100000000;
+        double lowestGet = 100000000;
         for (int count = 0; count < iterations; count++){
             ArrayList<Integer> a = new ArrayList<>();
             long t0 = System.nanoTime();
@@ -65,40 +79,18 @@ public class CSArrayListTest {
             long t2 = System.nanoTime();
             double append = (t1-t0)/1e6;
             double get = (t2-t1)/1e6;
-            // System.out.printf("ArrayList: append = %.1fms, get = %.1fms\n", append, get);
+            System.out.printf("ArrayList: append = %.1fms, get = %.1fms\n", append, get);
             averageAppend += append;
             averageGet += append;
+            if (append > highestAppend) highestAppend = append;
+            if (append > highestGet) highestGet = get;
+            if (append < lowestAppend) lowestAppend = append;
+            if (append < lowestGet) lowestGet = get;
         }
         averageAppend = averageAppend / iterations;
         averageGet = averageGet / iterations;
-        System.out.printf("ArrayList Averages: append = %.1fms, get = %.1fms", averageGet, averageGet);
-
-        // After 10 runs
-        // CSArrayList: append = 8.7ms, get = 24.0ms
-        // CSArrayList: append = 16.4ms, get = 20.7ms
-        // CSArrayList: append = 22.0ms, get = 20.1ms
-        // CSArrayList: append = 17.0ms, get = 19.0ms
-        // CSArrayList: append = 4.4ms, get = 13.1ms
-        // CSArrayList: append = 4.8ms, get = 11.7ms
-        // CSArrayList: append = 5.0ms, get = 11.6ms
-        // CSArrayList: append = 21.8ms, get = 15.2ms
-        // CSArrayList: append = 17.9ms, get = 19.6ms
-        // CSArrayList: append = 8.5ms, get = 15.3ms
-        // Averages: append = 12.6ms, get = 12.6ms
-        //
-        // ArrayList: append = 7.6ms, get = 17.6ms
-        // ArrayList: append = 23.6ms, get = 16.8ms
-        // ArrayList: append = 4.4ms, get = 11.9ms
-        // ArrayList: append = 4.8ms, get = 14.0ms
-        // ArrayList: append = 4.3ms, get = 12.0ms
-        // ArrayList: append = 2.4ms, get = 13.0ms
-        // ArrayList: append = 2.7ms, get = 13.3ms
-        // ArrayList: append = 3.1ms, get = 13.1ms
-        // ArrayList: append = 24.7ms, get = 13.1ms
-        // ArrayList: append = 2.7ms, get = 12.6ms
-        // Averages: append = 8.0ms, get = 8.0ms
-        //
-        // While here we can see that ArrayList is better, for some reason on other runs, it can
-        // go either way
+        System.out.printf("ArrayList Highest: append = %.1fms, get = %.1fms\n", highestAppend, highestGet);
+        System.out.printf("ArrayList lowest: append = %.1fms, get = %.1fms\n", lowestAppend, lowestGet);
+        System.out.printf("ArrayList Averages: append = %.1fms, get = %.1fms\n", averageGet, averageGet);
     }
 }
