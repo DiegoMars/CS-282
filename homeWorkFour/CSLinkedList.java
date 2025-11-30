@@ -138,10 +138,32 @@ public class CSLinkedList<E> extends AbstractList<E> {
   }
 
   public void addInOrder(E item, Comparator<E> cmp) {
-    for (Node<E> cur = head.next; cur != null; cur = cur.next) {
-      if (o == null ? cur.data == null : o.equals(cur.data));
+    int i = 0;
+    for (Node<E> cur = head.next; cur != null; cur = cur.next, i++) {
+      int pos = cmp.compare(cur.data, item);
+      if (pos == 0 || pos > 0) {
+        add(i, item);
+        return;
+      }
     }
-    add(item);
+    add(size, item);
+  }
+
+  public boolean removeFirstOccurrence(E item) {
+    int pos = indexOf(item);
+    if (pos == -1){
+      return false;
+    }
+    remove(pos);
+    return true;
+  }
+
+  public CSLinkedList<E> copy() {
+    CSLinkedList<E> copied = new CSLinkedList<E>();
+    for (Node<E> cur = head.next; cur != null; cur = cur.next) {
+      copied.add(cur.data);
+    }
+    return copied;
   }
 
   @Override

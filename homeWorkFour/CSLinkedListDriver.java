@@ -19,9 +19,9 @@ public class CSLinkedListDriver {
         // runLL5_RecentlyContacted();
         // runLL6_ShoppingListAddAfter();
         // runLL7_BusRouteStops();
-        runLL8_EventScheduleSorted();
-        //runLL9_BugTrackerRemoveById();
-        //runLL10_PlaylistShuffleCopy();
+        // runLL8_EventScheduleSorted();
+        // runLL9_BugTrackerRemoveById();
+        runLL10_PlaylistShuffleCopy();
     }
 
     // LL1 – Music Playlist Manager
@@ -142,24 +142,19 @@ public class CSLinkedListDriver {
         System.out.println(stops);
     }
 
-    // LL8 – Event Schedule (Insert by Time)
-    class timeCmp implements Comparator<E> {
-        public int compare(E a, E b) {
-            // Negative if b comes before a
-            // 0 if b = a
-            // Positive if b comes after a
-            return b.compareTo(a);
-        }
-    }
+    // Negative if a comes before b
+    // 0 if a = b
+    // Positive if a comes after b
+    static Comparator<String> timeCmp = (String a, String b) -> (int)(a.compareTo(b));
     private static void runLL8_EventScheduleSorted() {
         // TODO: Implement task LL8 here.
         // You may add a helper method addInOrder(E item, Comparator<E> cmp) to CSLinkedList if needed.
         CSLinkedList<String> events = new CSLinkedList<String>();
-        events.addAfter("09:00 Class", timeCmp());
-        events.addAfter("10:00 Break", timeCmp());
-        events.addAfter("08:00 Breakfast", timeCmp());
-        events.addAfter("07:45 Wake Up", timeCmp());
-        events.addAfter("07:50 Brush Teeth", timeCmp());
+        events.addInOrder("09:00 Class", timeCmp);
+        events.addInOrder("10:00 Break", timeCmp);
+        events.addInOrder("08:00 Breakfast", timeCmp);
+        events.addInOrder("07:45 Wake Up", timeCmp);
+        events.addInOrder("07:50 Brush Teeth", timeCmp);
         for (String e : events) {
             System.out.println(e);
         }
@@ -169,11 +164,31 @@ public class CSLinkedListDriver {
     private static void runLL9_BugTrackerRemoveById() {
         // TODO: Implement task LL9 here.
         // You may add a helper method removeFirstOccurrence(E item) to CSLinkedList if needed.
+        CSLinkedList<Integer> ids = new CSLinkedList<Integer>();
+        ids.add(5);
+        ids.add(6);
+        ids.add(8);
+        ids.add(8);
+        ids.add(6);
+        ids.add(9);
+        ids.add(9);
+        ids.removeFirstOccurrence(6);
+        ids.removeFirstOccurrence(9);
+        ids.removeFirstOccurrence(9);
+        System.out.println(ids);
     }
 
     // LL10 – Playlist Shuffle Copy
     private static void runLL10_PlaylistShuffleCopy() {
         // TODO: Implement task LL10 here.
         // You may add a helper method copy() to CSLinkedList if needed.
+        CSLinkedList<Integer> ids = new CSLinkedList<Integer>();
+        ids.add(5);
+        ids.add(6);
+        ids.add(8);
+        CSLinkedList<Integer> idsCopy = ids.copy();
+        idsCopy.add(100000);
+        System.out.println(ids);
+        System.out.println(idsCopy);
     }
 }
