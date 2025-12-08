@@ -9,6 +9,8 @@ public class BSTExercises {
      */
     public static BST<Integer> fromArray(int[] values) {
         // TODO: implement Task 11 (optional)
+        if (values == null) throw new IllegalArgumentException("");
+        BST<Integer> tree = new BST<>();
         return null;
     }
 }
