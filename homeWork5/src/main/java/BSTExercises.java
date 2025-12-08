@@ -11,6 +11,9 @@ public class BSTExercises {
         // TODO: implement Task 11 (optional)
         if (values == null) throw new IllegalArgumentException("");
         BST<Integer> tree = new BST<>();
-        return null;
+        for (int integer : values){
+            tree.insert(integer);
+        }
+        return tree;
     }
 }
