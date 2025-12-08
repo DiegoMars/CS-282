@@ -219,6 +219,92 @@ public class BST<E> implements Tree<E> {
         return true; // Element deleted successfully
     }
 
+    // Task 6
+    public int height() {
+        return height(root);
+    }
+
+    // Helper for the above function
+    private int height(TreeNode<E> node) {
+        if (node == null) {
+            return -1;
+        }
+        int left = height(node.left);
+        int right = height(node.right);
+        if (left == -1 && right == -1) {
+            return 0;
+        }
+        int max = left;
+        if (right > max) {
+            max = right;
+        }
+        return 1 + max;
+    }
+
+    // Task 7
+    public int countLeaves() {
+        return countLeaves(root);
+    }
+
+    // Helper for the above function
+    private int countLeaves(TreeNode<E> node) {
+        if (node == null){
+            return 0;
+        }
+        int left = countLeaves(node.left);
+        int right = countLeaves(node.right);
+        if (left == 0 && right == 0) {
+            return 1;
+        }
+        return countLeaves(node.left) + countLeaves(node.right);
+    }
+
+    // Task 8
+    public E min() {
+        return min(root);
+    }
+    private E min(TreeNode<E> node) {
+        if (node == null) {
+            return null;
+        }
+        E min = node.element;
+        E left = min(node.left);
+        E right = min(node.right);
+        if (left == null && right == null) {
+            return null;
+        }
+        if (left != null && c.compare(left, min) < 0) {
+            min = left;
+        }
+        if (right != null && c.compare(right, min) < 0) {
+            min = right;
+        }
+        System.out.println(min);
+        return min;
+    }
+    public E max() {
+        return max(root);
+    }
+    private E max(TreeNode<E> node) {
+        if (node == null) {
+            return null;
+        }
+        E max = node.element;
+        E left = max(node.left);
+        E right = max(node.right);
+        if (left == null && right == null) {
+            return max;
+        }
+        if (left != null && c.compare(left, max) > 0) {
+            max = left;
+        }
+        if (right != null && c.compare(right, max) > 0) {
+            max = right;
+        }
+        System.out.println(max);
+        return max;
+    }
+
     @Override /** Obtain an iterator. Use inorder. */
     public java.util.Iterator<E> iterator() {
         return new InorderIterator();
