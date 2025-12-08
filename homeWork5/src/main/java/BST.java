@@ -271,7 +271,7 @@ public class BST<E> implements Tree<E> {
         E left = min(node.left);
         E right = min(node.right);
         if (left == null && right == null) {
-            return null;
+            return node.element;
         }
         if (left != null && c.compare(left, min) < 0) {
             min = left;
@@ -279,7 +279,6 @@ public class BST<E> implements Tree<E> {
         if (right != null && c.compare(right, min) < 0) {
             min = right;
         }
-        System.out.println(min);
         return min;
     }
     public E max() {
@@ -293,7 +292,7 @@ public class BST<E> implements Tree<E> {
         E left = max(node.left);
         E right = max(node.right);
         if (left == null && right == null) {
-            return max;
+            return node.element;
         }
         if (left != null && c.compare(left, max) > 0) {
             max = left;
@@ -301,8 +300,50 @@ public class BST<E> implements Tree<E> {
         if (right != null && c.compare(right, max) > 0) {
             max = right;
         }
-        System.out.println(max);
         return max;
+    }
+
+    // Task 9
+    public java.util.List<E> toSortedList() {
+        java.util.List<E> result = new java.util.ArrayList<>();
+        toSortedList(root, result);
+        return result;
+    }
+    private void toSortedList(TreeNode<E> node, java.util.List<E> result) {
+        if (node == null) {
+            return;
+        }
+        toSortedList(node.left, result);
+        result.add(node.element);
+        toSortedList(node.right, result);
+    }
+
+    // Task 10
+    public boolean isBalanced() {
+        int result = heightOrUnbalanced(root);
+        if (result == -2) {
+            return false;
+        }
+        return true;
+    }
+    private int heightOrUnbalanced(TreeNode<E> node) {
+        if (node == null) {
+            return -1;
+        }
+        int left = heightOrUnbalanced(node.left);
+        int right = heightOrUnbalanced(node.right);
+        int abs = java.lang.Math.abs(left-right);
+        if ((abs > 1) || (left == -2 || right == -2)) {
+            return -2;
+        }
+        if (left == -1 && right == -1) {
+            return 0;
+        }
+        int max = left;
+        if (right > max) {
+            max = right;
+        }
+        return 1 + max;
     }
 
     @Override /** Obtain an iterator. Use inorder. */
